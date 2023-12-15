@@ -1,6 +1,32 @@
 import * as Drawlib from "./drawlib.js";
 import * as Color from "./color.js";
 
+
+/**
+ * @throws {string}
+ * @returns {CanvasRenderingContext2D}
+ * @param {string} id
+ */
+function get2DContextById(id) {
+  const canvas = document.getElementById(id);
+  if (canvas === null) {
+    throw "No html element with id `canvas` found";
+  }
+  if (!(canvas instanceof HTMLCanvasElement)) {
+    throw "The selected element is not a canvas";
+  }
+  if (canvas.getContext) {
+    const ctx = canvas.getContext("2d");
+    if (ctx) {
+      return ctx;
+    } else {
+      throw "Error when getting the context";
+    }
+  } else {
+    throw "`getContext` is not a property of the element. Please use a modern browser.";
+  }
+}
+
 // arbre
 /**
  * @param {number} x
@@ -19,7 +45,7 @@ function drawTree(x, y, size) {
     Drawlib.move(x, y - size * 3, leaves)
   ]);
 
-  Drawlib.renderCentered(tree, context);
+  Drawlib.renderCentered(tree, get2DContextById("canvas"));
 }
 
 //  mouton
@@ -44,12 +70,8 @@ function drawSheep(x, y) {
     Drawlib.move(x + 15, y + 20, leg2)
   ]);
 
-  Drawlib.renderCentered(sheep, context);
+  Drawlib.renderCentered(sheep, get2DContextById("canvas"));
 }
-
-
-const canvas = document.getElementById("canvas");
-const context = canvas.getContext("2d");
 
 
 drawTree(100, 400, 40);

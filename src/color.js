@@ -8,7 +8,7 @@
  * @param {number} g
  * @param {number} b
  */
-function rgb(r, g, b) {
+export function rgb(r, g, b) {
   return { red: r, green: g, blue: b };
 }
 
